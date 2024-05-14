@@ -12,13 +12,13 @@ terraform {
     }
   }
 
-  backend "s3" {
-    bucket              = "<Provide Bucket Name here for remote backend of state>"
-    key                 = "<Provide path to save tf state at>"
-    region              = "<Provide AWS Region>"
-    profile             = "<Provide AWS SSO Credentials Profile Name here>"
-    allowed_account_ids = ["<Provide AWS account ID>"]
-  }
+  # backend "s3" {
+  #   bucket              = "<Provide Bucket Name here for remote backend of state>"
+  #   key                 = "<Provide path to save tf state at>"
+  #   region              = "<Provide AWS Region>"
+  #   profile             = "<Provide AWS SSO Credentials Profile Name here>"
+  #   allowed_account_ids = ["<Provide AWS account ID>"]
+  # }
 }
 
 provider "aws" {
