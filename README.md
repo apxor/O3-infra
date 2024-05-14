@@ -1,5 +1,3 @@
-# Apxor Infrastructure as Code (Terraform). Handwritten and Maintained by Apxor.
-
 ## Features
 
 - Created terraform modules for extreme reusability, readability and simpler code ✨
@@ -98,7 +96,7 @@
   2.  Configurable options to provide public/ private access, create IAM users for buckets etc..
 
 
-### Steps to Spin off/ Moderate the Environment
+### Steps to setup/moderate the Environment
 
 1. Change to directory to current working environment
 
