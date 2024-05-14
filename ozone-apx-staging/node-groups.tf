@@ -48,10 +48,6 @@ locals {
 }
 
 locals {
-  source = "../tf-modules/node-group"
-}
-
-locals {
   source       = "../tf-modules/node-group"
   subnet_1a    = [module.networking.private_subnets_ids[0]]
   subnet_1b    = [module.networking.private_subnets_ids[1]]
@@ -63,8 +59,8 @@ locals {
   common_conf = {
     cluster_name       = var.cluster_name
     ec2_key            = var.instance_key
-    security_group_ids = module.default-iam.security_group_ids
-    node_role_arn      = module.default-iam.node_role_arn
+    security_group_ids = module.networking.security_groups_ids
+    node_role_arn      = module.default-iam.node_group_role_arn
   }
 }
 
