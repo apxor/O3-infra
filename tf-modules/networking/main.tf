@@ -176,12 +176,15 @@ resource "aws_security_group" "default" {
   vpc_id      = aws_vpc.vpc.id
   depends_on  = [aws_vpc.vpc]
 
-  ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
-    self        = true
-    cidr_blocks = ["0.0.0.0/0"]
+  dynamic "ingress" {
+    for_each = var.sg_ingress_ports
+    iterator = p
+    content {
+      from_port   = p.value.from
+      to_port     = p.value.to
+      protocol    = p.value.protocol
+      cidr_blocks = [var.vpc_cidr]
+    }
   }
 
   egress {
@@ -189,7 +192,7 @@ resource "aws_security_group" "default" {
     to_port     = "0"
     protocol    = "-1"
     self        = "true"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.vpc_cidr]
   }
 
   tags = {
