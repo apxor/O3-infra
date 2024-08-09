@@ -73,9 +73,9 @@ locals {
   For: Clickhouse Historical Cluster
 */
 
-module "ng-ch-historical" {
-  name               = "db-ch-historical-spot"
-  instance_types     = [local.spot_highmem_8C_64G]
+module "ng-multi" {
+  name               = "ng-multi-spot"
+  instance_types     = [local.spot_general_16C_64G]
   provision_type     = local.SPOT
   autoscaler_enabled = true
   subnet_ids         = local.subnet_1a
@@ -84,45 +84,6 @@ module "ng-ch-historical" {
   scaling_config = {
     min_size     = 0
     desired_size = 0
-    max_size     = 6
-  }
-}
-
-/*
-  For: Clickhouse Realtime
-*/
-
-module "ng-ch-realtime" {
-  name               = "db-ch-realtime-spot"
-  instance_types     = [local.spot_highmem_8C_64G]
-  provision_type     = local.SPOT
-  autoscaler_enabled = true
-  subnet_ids         = local.subnet_1a
-  common_config      = local.common_conf
-  source             = "../tf-modules/node-group"
-  scaling_config = {
-    min_size     = 0
-    desired_size = 0
-    max_size     = 1
-  }
-}
-
-/*
-  For: Auxiliary Deployments
-  Like: Monitoring Stack, Superset etc .
-*/
-
-module "ng-aux" {
-  name               = "aux-spot"
-  instance_types     = [local.spot_general_4C_16G]
-  provision_type     = local.SPOT
-  autoscaler_enabled = true
-  subnet_ids         = local.subnet_1a
-  common_config      = local.common_conf
-  source             = "../tf-modules/node-group"
-  scaling_config = {
-    min_size     = 0
-    desired_size = 0
-    max_size     = 4
+    max_size     = 8
   }
 }
