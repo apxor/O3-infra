@@ -74,6 +74,7 @@ locals {
 */
 
 module "ng-multi" {
+  depends_on         = [aws_eks_cluster.eks_cluster]
   name               = "ng-multi-spot"
   instance_types     = [local.spot_general_16C_64G]
   provision_type     = local.SPOT

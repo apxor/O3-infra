@@ -52,7 +52,7 @@ module "oidc" {
 /* Import EBS add on */
 
 module "ebs-driver-addon" {
-  depends_on                = [aws_eks_cluster.eks_cluster, module.oidc]
+  depends_on                = [aws_eks_cluster.eks_cluster, module.oidc, module.ng-multi]
   source                    = "../tf-modules/ebs-csi-driver"
   region                    = var.region
   cluster_name              = var.cluster_name
@@ -63,7 +63,7 @@ module "ebs-driver-addon" {
 /* Import cluster-autoscaler Module */
 
 module "autoscaler" {
-  depends_on                = [aws_eks_cluster.eks_cluster, module.oidc]
+  depends_on                = [aws_eks_cluster.eks_cluster, module.oidc, module.ng-multi]
   source                    = "../tf-modules/cluster-autoscaler"
   region                    = var.region
   aws_account_id            = var.aws_account_id
