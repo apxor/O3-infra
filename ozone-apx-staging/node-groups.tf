@@ -76,15 +76,15 @@ locals {
 module "ng-multi" {
   depends_on         = [aws_eks_cluster.eks_cluster]
   name               = "ng-multi-spot"
-  instance_types     = [local.spot_general_16C_64G]
+  instance_types     = [local.spot_general_4C_16G, local.spot_general_2C_8G]
   provision_type     = local.SPOT
   autoscaler_enabled = true
   subnet_ids         = local.subnet_1a
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 0
-    desired_size = 0
+    min_size     = 2
+    desired_size = 2
     max_size     = 8
   }
 }
