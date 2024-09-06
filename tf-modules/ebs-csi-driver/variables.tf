@@ -29,3 +29,14 @@ variable "ebs_driver_name" {
   description = "The name of the eks ebs addon"
   default     = "aws-ebs-csi-driver"
 }
+
+variable "ebs_driver_version" {
+  type        = string
+  description = "The version of the eks ebs addon"
+}
+
+variable "ebs_snapshotter_force_enable" {
+  type        = bool
+  description = "Whether to force enable the snapshotter sidecar"
+  default     = false
+}

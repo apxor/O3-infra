@@ -55,6 +55,17 @@ variable "cluster_version" {
   description = "Version of the EKS cluster"
 }
 
+variable "ebs_driver_version" {
+  type        = string
+  description = "The version of the eks ebs addon"
+}
+
+variable "ebs_snapshotter_force_enable" {
+  type        = bool
+  description = "Whether to force enable the snapshotter sidecar"
+  default     = false
+}
+
 variable "enabled_cluster_log_types" {
   description = "The enabled log types for EKS cluster"
   type        = list(string)
@@ -65,6 +76,3 @@ variable "instance_key" {
   description = "Name of the EC2 isntance key created for access to instances"
   type        = string
 }
-
-
-
