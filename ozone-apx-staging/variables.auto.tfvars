@@ -1,9 +1,9 @@
 /* Variables for AWS environemnt */
 
-region         = ""
+region         = "ap-south-1"
 environment    = ""
 aws_account_id = ""
-sso_profile    = ""
+sso_profile    = "default"
 
 /* Variables for Networking module */
 
@@ -14,5 +14,7 @@ public_subnets_cidr  = ["10.0.96.0/19", "10.0.128.0/19", "10.0.160.0/19"]
 /* Variables for EKS */
 
 cluster_name    = ""
-cluster_version = ""
 instance_key    = ""
+cluster_version = "1.30"
+# check for the compatible version here: https://docs.aws.amazon.com/eks/latest/userguide/addon-compat.html
+ebs_driver_version = "v1.34.0-eksbuild.1"

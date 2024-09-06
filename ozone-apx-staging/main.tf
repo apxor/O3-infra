@@ -52,12 +52,14 @@ module "oidc" {
 /* Import EBS add on */
 
 module "ebs-driver-addon" {
-  depends_on                = [aws_eks_cluster.eks_cluster, module.oidc, module.ng-multi]
-  source                    = "../tf-modules/ebs-csi-driver"
-  region                    = var.region
-  cluster_name              = var.cluster_name
-  oidc_id                   = module.oidc.oidc_id
-  aws_iam_oidc_provider_arn = module.oidc.aws_iam_oidc_provider_arn
+  depends_on                   = [aws_eks_cluster.eks_cluster, module.oidc, module.ng-multi]
+  source                       = "../tf-modules/ebs-csi-driver"
+  region                       = var.region
+  cluster_name                 = var.cluster_name
+  oidc_id                      = module.oidc.oidc_id
+  aws_iam_oidc_provider_arn    = module.oidc.aws_iam_oidc_provider_arn
+  ebs_snapshotter_force_enable = var.ebs_snapshotter_force_enable
+  ebs_driver_version           = var.ebs_driver_version
 }
 
 /* Import cluster-autoscaler Module */
