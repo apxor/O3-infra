@@ -49,7 +49,7 @@ resource "aws_iam_user_policy" "bucket_access_policy" {
 }
 
 resource "aws_iam_user_policy_attachment" "bucket_policy_attachment" {
-  count = var.create_user_access_credentials ? 1 : 0
+  count      = var.create_user_access_credentials ? 1 : 0
   user       = aws_iam_user.bucket_user[0].name
   policy_arn = aws_iam_user_policy.bucket_access_policy.arn
 }
