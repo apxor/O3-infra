@@ -48,11 +48,11 @@ resource "aws_iam_user_policy" "bucket_access_policy" {
   })
 }
 
-resource "aws_iam_user_policy_attachment" "bucket_policy_attachment" {
-  count      = var.create_user_access_credentials ? 1 : 0
-  user       = aws_iam_user.bucket_user[0].name
-  policy_arn = aws_iam_user_policy.bucket_access_policy.arn
-}
+# resource "aws_iam_user_policy_attachment" "bucket_policy_attachment" {
+#   count      = var.create_user_access_credentials ? 1 : 0
+#   user       = aws_iam_user.bucket_user[0].name
+#   policy_arn = aws_iam_user_policy.bucket_access_policy.arn
+# }
 
 resource "aws_s3_bucket_versioning" "bucket_versioning" {
   count  = var.enable_bucket_versioning ? 1 : 0
