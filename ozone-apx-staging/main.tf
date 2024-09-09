@@ -73,3 +73,17 @@ module "autoscaler" {
   aws_iam_oidc_provider_arn = module.oidc.aws_iam_oidc_provider_arn
   cluster_name              = var.cluster_name
 }
+
+/* Import alb-controller Module */
+
+module "alb-controller" {
+  depends_on                = [module.oidc]
+  source                    = "../tf-modules/alb-controller"
+  region                    = var.region
+  aws_account_id            = var.aws_account_id
+  cluster_name              = var.cluster_name
+  oidc_id                   = module.oidc.oidc_id
+  aws_iam_oidc_provider_arn = module.oidc.aws_iam_oidc_provider_arn
+  vpc_id                    = module.networking.vpc_id
+  enabled                   = true
+}
