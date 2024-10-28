@@ -7,9 +7,15 @@ sso_profile    = "default"
 
 /* Variables for Networking module */
 
-vpc_cidr             = "10.0.0.0/16"
-private_subnets_cidr = ["10.0.0.0/19", "10.0.32.0/19", "10.0.64.0/19"]
-public_subnets_cidr  = ["10.0.96.0/19", "10.0.128.0/19", "10.0.160.0/19"]
+# vpc_cidr             = "10.0.0.0/16"
+# private_subnets_cidr = ["10.0.0.0/19", "10.0.32.0/19", "10.0.64.0/19"]
+# public_subnets_cidr  = ["10.0.96.0/19", "10.0.128.0/19", "10.0.160.0/19"]
+
+vpc_id                     = ""
+private_subnets_ids_zone_a = []
+private_subnets_ids_zone_b = []
+private_subnets_ids_zone_c = []
+security_groups_ids        = []
 
 /* Variables for EKS */
 
