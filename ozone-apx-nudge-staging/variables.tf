@@ -26,21 +26,45 @@ variable "sso_profile" {
   variables for networking module
 ---------------------------------*/
 
-variable "vpc_cidr" {
+# variable "vpc_cidr" {
+#   type        = string
+#   description = "The CIDR block of the vpc"
+# }
+
+# variable "public_subnets_cidr" {
+#   type        = list(string)
+#   description = "The CIDR block for the public subnet"
+# }
+
+# variable "private_subnets_cidr" {
+#   type        = list(string)
+#   description = "The CIDR block for the private subnet"
+# }
+
+variable "vpc_id" {
   type        = string
-  description = "The CIDR block of the vpc"
+  description = "id of the vpc"
 }
 
-variable "public_subnets_cidr" {
+variable "private_subnets_ids_zone_a" {
   type        = list(string)
-  description = "The CIDR block for the public subnet"
+  description = "list of private subnet ids for zone a"
 }
 
-variable "private_subnets_cidr" {
+variable "private_subnets_ids_zone_b" {
   type        = list(string)
-  description = "The CIDR block for the private subnet"
+  description = "list of private subnet ids for zone b"
 }
 
+variable "private_subnets_ids_zone_c" {
+  type        = list(string)
+  description = "list of private subnet ids for zone c"
+}
+
+variable "security_groups_ids" {
+  type        = list(string)
+  description = "list of security group ids"
+}
 
 /*-------------------------------
   variables for EKS cluster

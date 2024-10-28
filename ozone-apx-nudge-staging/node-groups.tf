@@ -49,17 +49,17 @@ locals {
 
 locals {
   source       = "../tf-modules/node-group"
-  subnet_1a    = [module.networking.private_subnets_ids[0]]
-  subnet_1b    = [module.networking.private_subnets_ids[1]]
-  subnet_1c    = [module.networking.private_subnets_ids[2]]
-  subnet_multi = module.networking.private_subnets_ids
+  subnet_1a    = var.private_subnets_ids_zone_a
+  subnet_1b    = var.private_subnets_ids_zone_b
+  subnet_1c    = var.private_subnets_ids_zone_c
+  subnet_multi = concat(var.private_subnets_ids_zone_a, var.private_subnets_ids_zone_b, var.private_subnets_ids_zone_c)
 }
 
 locals {
   common_conf = {
     cluster_name       = var.cluster_name
     ec2_key            = var.instance_key
-    security_group_ids = module.networking.security_groups_ids
+    security_group_ids = var.security_groups_ids
     node_role_arn      = module.default-iam.node_group_role_arn
   }
 }
@@ -99,15 +99,15 @@ module "ng-standby" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 1
-    desired_size = 1
+    min_size     = 0
+    desired_size = 0
     max_size     = 2
   }
 }
 
 module "ng-spot" {
   depends_on         = [aws_eks_cluster.eks_cluster]
-  name               = "ng-spoty"
+  name               = "ng-spot"
   instance_types     = [local.spot_general_16C_64G]
   provision_type     = local.SPOT
   autoscaler_enabled = true
@@ -115,7 +115,7 @@ module "ng-spot" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 1
+    min_size     = 0
     desired_size = 1
     max_size     = 2
   }
