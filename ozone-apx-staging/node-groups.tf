@@ -88,3 +88,39 @@ module "ng-multi" {
     max_size     = 8
   }
 }
+
+/*
+  Node pool for nudging cluster
+*/
+
+module "nudging-ng-standby" {
+  depends_on         = [aws_eks_cluster.nudging_eks_cluster]
+  name               = "ng-standby"
+  instance_types     = [local.standby_general_16C_64G]
+  provision_type     = local.ON_DEMAND
+  autoscaler_enabled = true
+  subnet_ids         = local.subnet_1a
+  common_config      = local.common_conf
+  source             = "../tf-modules/node-group"
+  scaling_config = {
+    min_size     = 0
+    desired_size = 0
+    max_size     = 2
+  }
+}
+
+module "nudging-ng-spot" {
+  depends_on         = [aws_eks_cluster.nudging_eks_cluster]
+  name               = "ng-spot"
+  instance_types     = [local.spot_general_16C_64G]
+  provision_type     = local.SPOT
+  autoscaler_enabled = true
+  subnet_ids         = local.subnet_1a
+  common_config      = local.common_conf
+  source             = "../tf-modules/node-group"
+  scaling_config = {
+    min_size     = 0
+    desired_size = 1
+    max_size     = 2
+  }
+}
