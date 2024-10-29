@@ -18,3 +18,7 @@ instance_key    = ""
 cluster_version = "1.30"
 # check for the compatible version here: https://docs.aws.amazon.com/eks/latest/userguide/addon-compat.html
 ebs_driver_version = "v1.34.0-eksbuild.1"
+
+/* Variables for Nuding EKS. cluster version, driver version are taken from above */
+
+nudging_cluster_name = ""
