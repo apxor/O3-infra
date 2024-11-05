@@ -100,3 +100,9 @@ variable "instance_key" {
   description = "Name of the EC2 isntance key created for access to instances"
   type        = string
 }
+
+variable "kms_key_arn" {
+  description = "the arn of the kms key"
+  type        = string
+  default     = ""
+}

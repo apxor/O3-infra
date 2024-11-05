@@ -24,3 +24,5 @@ instance_key    = ""
 cluster_version = "1.30"
 # check for the compatible version here: https://docs.aws.amazon.com/eks/latest/userguide/addon-compat.html
 ebs_driver_version = "v1.34.0-eksbuild.1"
+# if any kms encryption used, provide the arn here
+kms_key_arn = ""

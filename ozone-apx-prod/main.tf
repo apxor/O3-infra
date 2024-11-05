@@ -60,6 +60,7 @@ module "ebs-driver-addon" {
   aws_iam_oidc_provider_arn    = module.oidc.aws_iam_oidc_provider_arn
   ebs_snapshotter_force_enable = var.ebs_snapshotter_force_enable
   ebs_driver_version           = var.ebs_driver_version
+  kms_key_arn                  = var.kms_key_arn
   environment                  = var.environment
 }
 

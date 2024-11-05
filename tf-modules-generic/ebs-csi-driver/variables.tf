@@ -44,5 +44,10 @@ variable "ebs_snapshotter_force_enable" {
 variable "environment" {
   type        = string
   description = "The environment of the cluster"
+}
 
+variable "kms_key_arn" {
+  type        = string
+  description = "The arn of the kms key"
+  default     = ""
 }
