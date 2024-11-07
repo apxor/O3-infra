@@ -69,21 +69,6 @@ locals {
   ON_DEMAND = "ON_DEMAND"
 }
 
-# module "ng-ch-realtime" {
-#   name               = "db-ch-realtime-standby"
-#   instance_types     = [local.standby_general_16C_64G]
-#   provision_type     = local.ON_DEMAND
-#   autoscaler_enabled = false
-#   subnet_ids         = local.subnet_1a
-#   common_config      = local.common_conf
-#   source             = "../tf-modules-generic/node-group"
-#   scaling_config = {
-#     min_size     = 0
-#     desired_size = 0
-#     max_size     = 1
-#   }
-# }
-
 module "ng-temp" {
   depends_on         = [aws_eks_cluster.eks_cluster]
   name               = "ng-temp-standby"
@@ -100,51 +85,51 @@ module "ng-temp" {
   }
 }
 
-# module "ng-kafka-a" {
-#   name               = "db-kafka-a"
-#   instance_types     = [local.standby_highmem_8C_64G]
-#   provision_type     = local.ON_DEMAND
-#   autoscaler_enabled = false
-#   subnet_ids         = local.subnet_1a
-#   common_config      = local.common_conf
-#   source             = "../tf-modules-generic/node-group"
-#   scaling_config = {
-#     min_size     = 0
-#     desired_size = 0
-#     max_size     = 2
-#   }
-# }
+module "ng-kafka-a" {
+  name               = "db-kafka-a"
+  instance_types     = [local.standby_highmem_4C_32G]
+  provision_type     = local.ON_DEMAND
+  autoscaler_enabled = false
+  subnet_ids         = local.subnet_1a
+  common_config      = local.common_conf
+  source             = "../tf-modules-generic/node-group"
+  scaling_config = {
+    min_size     = 2
+    desired_size = 2
+    max_size     = 2
+  }
+}
 
-# module "ng-kafka-b" {
-#   name               = "db-kafka-b"
-#   instance_types     = [local.standby_highmem_8C_64G]
-#   provision_type     = local.ON_DEMAND
-#   autoscaler_enabled = false
-#   subnet_ids         = local.subnet_1b
-#   common_config      = local.common_conf
-#   source             = "../tf-modules-generic/node-group"
-#   scaling_config = {
-#     min_size     = 0
-#     desired_size = 0
-#     max_size     = 1
+module "ng-kafka-b" {
+  name               = "db-kafka-b"
+  instance_types     = [local.standby_highmem_4C_32G]
+  provision_type     = local.ON_DEMAND
+  autoscaler_enabled = false
+  subnet_ids         = local.subnet_1b
+  common_config      = local.common_conf
+  source             = "../tf-modules-generic/node-group"
+  scaling_config = {
+    min_size     = 1
+    desired_size = 1
+    max_size     = 1
 
-#   }
-# }
+  }
+}
 
-# module "ng-kafka-c" {
-#   name               = "db-kafka-c"
-#   instance_types     = [local.standby_highmem_8C_64G]
-#   provision_type     = local.ON_DEMAND
-#   autoscaler_enabled = false
-#   subnet_ids         = local.subnet_1c
-#   common_config      = local.common_conf
-#   source             = "../tf-modules-generic/node-group"
-#   scaling_config = {
-#     min_size     = 0
-#     desired_size = 0
-#     max_size     = 1
-#   }
-# }
+module "ng-kafka-c" {
+  name               = "db-kafka-c"
+  instance_types     = [local.standby_highmem_4C_32G]
+  provision_type     = local.ON_DEMAND
+  autoscaler_enabled = false
+  subnet_ids         = local.subnet_1c
+  common_config      = local.common_conf
+  source             = "../tf-modules-generic/node-group"
+  scaling_config = {
+    min_size     = 1
+    desired_size = 1
+    max_size     = 1
+  }
+}
 
 module "ch-standby-a" {
   depends_on         = [aws_eks_cluster.eks_cluster]
@@ -156,8 +141,8 @@ module "ch-standby-a" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 0
-    desired_size = 0
+    min_size     = 1
+    desired_size = 1
     max_size     = 1
   }
 }
@@ -172,8 +157,8 @@ module "ch-standby-b" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 0
-    desired_size = 0
+    min_size     = 1
+    desired_size = 1
     max_size     = 1
   }
 }
@@ -188,8 +173,8 @@ module "ch-standby-c" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 0
-    desired_size = 0
+    min_size     = 1
+    desired_size = 1
     max_size     = 1
   }
 }
@@ -204,8 +189,8 @@ module "ch-spot-a" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 0
-    desired_size = 0
+    min_size     = 1
+    desired_size = 1
     max_size     = 1
   }
 }
@@ -220,8 +205,8 @@ module "ch-spot-b" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 0
-    desired_size = 0
+    min_size     = 1
+    desired_size = 1
     max_size     = 1
   }
 }
@@ -236,8 +221,8 @@ module "ch-spot-c" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 0
-    desired_size = 0
+    min_size     = 1
+    desired_size = 1
     max_size     = 1
   }
 }
@@ -252,8 +237,8 @@ module "ch-realtime-spot" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 0
-    desired_size = 0
+    min_size     = 1
+    desired_size = 1
     max_size     = 1
   }
 }
