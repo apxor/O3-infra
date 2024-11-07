@@ -27,7 +27,7 @@ locals {
 
 resource "aws_iam_policy" "kube_sa_iam_policy" {
   count = local.need_iam ? 1 : 0
-  name  = "TF-Kube-${var.service_account_name}-${var.namespace}-IAM-Policy"
+  name  = "apx-o3-${var.environment}-${var.service_account_name}-${var.namespace}-sa-IAM-Policy"
   policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : local.full_statement
@@ -37,7 +37,7 @@ resource "aws_iam_policy" "kube_sa_iam_policy" {
 resource "aws_iam_role" "kube_sa_iam_role" {
   depends_on = [aws_iam_policy.kube_sa_iam_policy]
   count      = local.need_iam ? 1 : 0
-  name       = "TF-Kube-${var.service_account_name}-${var.namespace}-IAM-Role"
+  name       = "apx-o3-${var.environment}-${var.service_account_name}-${var.namespace}-sa-IAM-Role"
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
