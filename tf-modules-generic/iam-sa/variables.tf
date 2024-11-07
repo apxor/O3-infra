@@ -36,3 +36,8 @@ variable "access_to_s3_buckets" {
   description = "List of S3 bucket names to provide access"
   default     = null
 }
+
+variable "environment" {
+  type        = string
+  description = "environment name"
+}
