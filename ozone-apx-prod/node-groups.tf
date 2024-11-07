@@ -257,3 +257,136 @@ module "ch-realtime-spot" {
     max_size     = 1
   }
 }
+
+/*
+  Meta Mongo Standby Node Groups - Multi Region
+*/
+
+
+module "meta-mongo-standby-a" {
+  depends_on         = [aws_eks_cluster.eks_cluster]
+  name               = "meta-mongo-standby-a"
+  instance_types     = [local.standby_highmem_2C_16G]
+  provision_type     = local.ON_DEMAND
+  autoscaler_enabled = true
+  subnet_ids         = local.subnet_1a
+  common_config      = local.common_conf
+  source             = "../tf-modules/node-group"
+  scaling_config = {
+    min_size     = 1
+    desired_size = 1
+    max_size     = 1
+  }
+}
+
+module "meta-mongo-standby-b" {
+  depends_on         = [aws_eks_cluster.eks_cluster]
+  name               = "meta-mongo-standby-b"
+  instance_types     = [local.standby_highmem_2C_16G]
+  provision_type     = local.ON_DEMAND
+  autoscaler_enabled = true
+  subnet_ids         = local.subnet_1b
+  common_config      = local.common_conf
+  source             = "../tf-modules/node-group"
+  scaling_config = {
+    min_size     = 1
+    desired_size = 1
+    max_size     = 1
+  }
+}
+
+module "meta-mongo-standby-c" {
+  depends_on         = [aws_eks_cluster.eks_cluster]
+  name               = "meta-mongo-standby-c"
+  instance_types     = [local.standby_highmem_2C_16G]
+  provision_type     = local.ON_DEMAND
+  autoscaler_enabled = true
+  subnet_ids         = local.subnet_1c
+  common_config      = local.common_conf
+  source             = "../tf-modules/node-group"
+  scaling_config = {
+    min_size     = 1
+    desired_size = 1
+    max_size     = 1
+  }
+}
+
+/*
+  Secor Zookeeper Standby Node Groups
+*/
+
+module "secor-zk-standby" {
+  depends_on         = [aws_eks_cluster.eks_cluster]
+  name               = "secor-zk-standby"
+  instance_types     = [local.standby_general_2C_8G]
+  provision_type     = local.ON_DEMAND
+  autoscaler_enabled = true
+  subnet_ids         = local.subnet_1a
+  common_config      = local.common_conf
+  source             = "../tf-modules-generic/node-group"
+  scaling_config = {
+    min_size     = 3
+    desired_size = 3
+    max_size     = 3
+  }
+}
+
+/*
+  Secor Deployments Spot Node Groups
+*/
+
+module "secor-spot" {
+  depends_on         = [aws_eks_cluster.eks_cluster]
+  name               = "secor-spot"
+  instance_types     = [local.standby_highmem_4C_32G]
+  provision_type     = local.SPOT
+  autoscaler_enabled = true
+  subnet_ids         = local.subnet_1a
+  common_config      = local.common_conf
+  source             = "../tf-modules-generic/node-group"
+  scaling_config = {
+    min_size     = 2
+    desired_size = 2
+    max_size     = 5
+  }
+}
+
+/*
+  Bloomd Redis Standby Node Groups 
+*/
+
+module "bloomd-redis-standby" {
+  depends_on         = [aws_eks_cluster.eks_cluster]
+  name               = "bloomd-redis-standby"
+  instance_types     = [local.standby_highmem_2C_16G]
+  provision_type     = local.ON_DEMAND
+  autoscaler_enabled = true
+  subnet_ids         = local.subnet_1a
+  common_config      = local.common_conf
+  source             = "../tf-modules-generic/node-group"
+  scaling_config = {
+    min_size     = 3
+    desired_size = 3
+    max_size     = 3
+  }
+}
+
+/*
+  Bloomd Redis Spot Node Groups
+*/
+
+module "bloomd-redis-spot" {
+  depends_on         = [aws_eks_cluster.eks_cluster]
+  name               = "bloomd-redis-spot"
+  instance_types     = [local.spot_highmem_2C_16G]
+  provision_type     = local.SPOT
+  autoscaler_enabled = true
+  subnet_ids         = local.subnet_1a
+  common_config      = local.common_conf
+  source             = "../tf-modules-generic/node-group"
+  scaling_config = {
+    min_size     = 6
+    desired_size = 6
+    max_size     = 6
+  }
+}
