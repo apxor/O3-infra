@@ -141,9 +141,9 @@ module "ch-standby-a" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 1
-    desired_size = 1
-    max_size     = 1
+    min_size     = 2
+    desired_size = 2
+    max_size     = 2
   }
 }
 
@@ -157,9 +157,9 @@ module "ch-standby-b" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 1
-    desired_size = 1
-    max_size     = 1
+    min_size     = 2
+    desired_size = 2
+    max_size     = 2
   }
 }
 
@@ -173,63 +173,16 @@ module "ch-standby-c" {
   common_config      = local.common_conf
   source             = "../tf-modules/node-group"
   scaling_config = {
-    min_size     = 1
-    desired_size = 1
-    max_size     = 1
+    min_size     = 2
+    desired_size = 2
+    max_size     = 2
   }
 }
 
-module "ch-spot-a" {
-  depends_on         = [aws_eks_cluster.eks_cluster]
-  name               = "ch-spot-a"
-  instance_types     = [local.standby_general_4C_16G]
-  provision_type     = local.ON_DEMAND
-  autoscaler_enabled = true
-  subnet_ids         = local.subnet_1a
-  common_config      = local.common_conf
-  source             = "../tf-modules/node-group"
-  scaling_config = {
-    min_size     = 1
-    desired_size = 1
-    max_size     = 1
-  }
-}
 
-module "ch-spot-b" {
+module "ch-realtime-standby" {
   depends_on         = [aws_eks_cluster.eks_cluster]
-  name               = "ch-spot-b"
-  instance_types     = [local.standby_general_4C_16G]
-  provision_type     = local.ON_DEMAND
-  autoscaler_enabled = true
-  subnet_ids         = local.subnet_1b
-  common_config      = local.common_conf
-  source             = "../tf-modules/node-group"
-  scaling_config = {
-    min_size     = 1
-    desired_size = 1
-    max_size     = 1
-  }
-}
-
-module "ch-spot-c" {
-  depends_on         = [aws_eks_cluster.eks_cluster]
-  name               = "ch-spot-c"
-  instance_types     = [local.standby_general_4C_16G]
-  provision_type     = local.ON_DEMAND
-  autoscaler_enabled = true
-  subnet_ids         = local.subnet_1c
-  common_config      = local.common_conf
-  source             = "../tf-modules/node-group"
-  scaling_config = {
-    min_size     = 1
-    desired_size = 1
-    max_size     = 1
-  }
-}
-
-module "ch-realtime-spot" {
-  depends_on         = [aws_eks_cluster.eks_cluster]
-  name               = "ch-realtime-spot"
+  name               = "ch-realtime-standby"
   instance_types     = [local.standby_general_16C_64G]
   provision_type     = local.ON_DEMAND
   autoscaler_enabled = true
