@@ -384,7 +384,7 @@ resource "aws_iam_role_policy_attachment" "aws_loadbalancer_role_attachment_two"
 
 
 resource "kubernetes_service_account" "aws_load_balancer_controller_sa" {
-  depends_on = [aws_iam_role_policy_attachment.aws_loadbalancer_role_attachment_one]
+  depends_on = [aws_iam_role_policy_attachment.aws_loadbalancer_role_attachment_one, aws_iam_role_policy_attachment.aws_loadbalancer_role_attachment_two]
   metadata {
     name      = "aws-load-balancer-controller"
     namespace = "kube-system"
