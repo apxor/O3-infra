@@ -50,3 +50,7 @@ variable "mod_dependency" {
   default     = null
   description = "Dependence variable binds all AWS resources allocated by this module, dependent modules reference this variable."
 }
+
+variable "environment" {
+  type = string
+}
