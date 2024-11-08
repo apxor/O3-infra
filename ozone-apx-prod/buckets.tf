@@ -36,6 +36,6 @@ module "apx-o3-redis-dumps-bucket" {
 }
 
 module "apx-o3-dashboard-downloadables-bucket" {
-  source          = "../tf-modules-generic/s3-bucket"
-  bucket_name     = "apx-o3-${var.environment}-dashboard-downloadables"
+  source      = "../tf-modules-generic/s3-bucket"
+  bucket_name = "apx-o3-${var.environment}-dashboard-downloadables"
 }
