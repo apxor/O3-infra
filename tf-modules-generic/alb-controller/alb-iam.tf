@@ -1,8 +1,8 @@
 /* AWS Load Balancer Controller IAM */
 /* Ref: https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html */
 
-resource "aws_iam_policy" "aws_loadbalancer_controller_policy" {
-  name = "AWSLoadBalancerControllerIAMPolicy"
+resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_one" {
+  name = "AWSLoadBalancerControllerIAMPolicyPartOne"
   policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
@@ -152,7 +152,17 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy" {
             "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
           }
         }
-      },
+      }
+    ]
+  })
+}
+
+
+resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_two" {
+  name = "AWSLoadBalancerControllerIAMPolicyPartTwo"
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
       {
         "Effect" : "Allow",
         "Action" : [
@@ -338,7 +348,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy" {
 }
 
 resource "aws_iam_role" "aws_loadbalancer_controller_role" {
-  depends_on = [aws_iam_policy.aws_loadbalancer_controller_policy]
+  depends_on = [aws_iam_policy.aws_loadbalancer_controller_policy_part_one, aws_iam_policy.aws_loadbalancer_controller_policy_part_two]
   name       = "AmazonEKSLoadBalancerControllerRole"
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
@@ -360,15 +370,21 @@ resource "aws_iam_role" "aws_loadbalancer_controller_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "aws_loadbalancer_role_attachment" {
+resource "aws_iam_role_policy_attachment" "aws_loadbalancer_role_attachment_one" {
   depends_on = [aws_iam_role.aws_loadbalancer_controller_role]
   role       = aws_iam_role.aws_loadbalancer_controller_role.name
-  policy_arn = aws_iam_policy.aws_loadbalancer_controller_policy.arn
+  policy_arn = aws_iam_policy.aws_loadbalancer_controller_policy_part_one.arn
+}
+
+resource "aws_iam_role_policy_attachment" "aws_loadbalancer_role_attachment_two" {
+  depends_on = [aws_iam_role.aws_loadbalancer_controller_role]
+  role       = aws_iam_role.aws_loadbalancer_controller_role.name
+  policy_arn = aws_iam_policy.aws_loadbalancer_controller_policy_part_two.arn
 }
 
 
 resource "kubernetes_service_account" "aws_load_balancer_controller_sa" {
-  depends_on = [aws_iam_role_policy_attachment.aws_loadbalancer_role_attachment]
+  depends_on = [aws_iam_role_policy_attachment.aws_loadbalancer_role_attachment_one]
   metadata {
     name      = "aws-load-balancer-controller"
     namespace = "kube-system"
