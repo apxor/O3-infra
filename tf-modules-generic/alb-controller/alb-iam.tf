@@ -349,7 +349,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_two" {
 
 resource "aws_iam_role" "aws_loadbalancer_controller_role" {
   depends_on = [aws_iam_policy.aws_loadbalancer_controller_policy_part_one, aws_iam_policy.aws_loadbalancer_controller_policy_part_two]
-  name       = "AmazonEKSLoadBalancerControllerRole"
+  name       = "${var.environment}-AmazonEKSLoadBalancerControllerRole"
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [

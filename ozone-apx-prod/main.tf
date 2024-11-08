@@ -89,4 +89,5 @@ module "alb-controller" {
   aws_iam_oidc_provider_arn = module.oidc.aws_iam_oidc_provider_arn
   vpc_id                    = var.vpc_id
   enabled                   = true
+  environment               = var.environment
 }
