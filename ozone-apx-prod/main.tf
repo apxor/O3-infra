@@ -81,7 +81,7 @@ module "autoscaler" {
 
 module "alb-controller" {
   depends_on                = [module.oidc]
-  source                    = "../tf-modules-generic//alb-controller"
+  source                    = "../tf-modules-generic/alb-controller"
   region                    = var.region
   aws_account_id            = var.aws_account_id
   cluster_name              = var.cluster_name

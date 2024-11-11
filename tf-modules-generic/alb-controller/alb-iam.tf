@@ -15,12 +15,6 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_one" {
         "Condition" : {
           "StringEquals" : {
             "iam:AWSServiceName" : "elasticloadbalancing.amazonaws.com"
-          },
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
-          },
-          "Null" : {
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
           }
         }
       },
@@ -74,15 +68,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_one" {
           "shield:CreateProtection",
           "shield:DeleteProtection"
         ],
-        "Resource" : "*",
-        "Condition" : {
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
-          },
-          "Null" : {
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
-          }
-        }
+        "Resource" : "*"
       },
       {
         "Effect" : "Allow",
@@ -106,14 +92,6 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_one" {
           "ec2:CreateSecurityGroup"
         ],
         "Resource" : "*",
-        "Condition" : {
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
-          },
-          "Null" : {
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
-          }
-        }
       },
       {
         "Effect" : "Allow",
@@ -126,11 +104,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_one" {
             "ec2:CreateAction" : "CreateSecurityGroup"
           },
           "Null" : {
-            "aws:RequestTag/elbv2.k8s.aws/cluster" : "false",
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
-          },
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
+            "aws:RequestTag/elbv2.k8s.aws/cluster" : "false"
           }
         }
       },
@@ -144,12 +118,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_one" {
         "Condition" : {
           "Null" : {
             "aws:RequestTag/elbv2.k8s.aws/cluster" : "true",
-            "aws:ResourceTag/elbv2.k8s.aws/cluster" : "false",
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
-
-          },
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
+            "aws:ResourceTag/elbv2.k8s.aws/cluster" : "false"
           }
         }
       }
@@ -174,10 +143,6 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_two" {
         "Condition" : {
           "Null" : {
             "aws:ResourceTag/elbv2.k8s.aws/cluster" : "false",
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
-          },
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
           }
         }
       },
@@ -190,11 +155,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_two" {
         "Resource" : "*",
         "Condition" : {
           "Null" : {
-            "aws:RequestTag/elbv2.k8s.aws/cluster" : "false",
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
-          },
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
+            "aws:RequestTag/elbv2.k8s.aws/cluster" : "false"
           }
         }
       },
@@ -206,15 +167,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_two" {
           "elasticloadbalancing:CreateRule",
           "elasticloadbalancing:DeleteRule"
         ],
-        "Resource" : "*",
-        "Condition" : {
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
-          },
-          "Null" : {
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
-          }
-        }
+        "Resource" : "*"
       },
       {
         "Effect" : "Allow",
@@ -231,10 +184,6 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_two" {
           "Null" : {
             "aws:RequestTag/elbv2.k8s.aws/cluster" : "true",
             "aws:ResourceTag/elbv2.k8s.aws/cluster" : "false",
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
-          },
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
           }
         }
       },
@@ -249,15 +198,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_two" {
           "arn:aws:elasticloadbalancing:*:*:listener/app/*/*/*",
           "arn:aws:elasticloadbalancing:*:*:listener-rule/net/*/*/*",
           "arn:aws:elasticloadbalancing:*:*:listener-rule/app/*/*/*"
-        ],
-        "Condition" : {
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
-          },
-          "Null" : {
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
-          }
-        }
+        ]
       },
       {
         "Effect" : "Allow",
@@ -273,11 +214,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_two" {
         ],
         "Resource" : "*",
         "Condition" : {
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
-          },
           "Null" : {
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false",
             "aws:ResourceTag/elbv2.k8s.aws/cluster" : "false"
           }
         }
@@ -300,11 +237,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_two" {
             ]
           },
           "Null" : {
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false",
             "aws:RequestTag/elbv2.k8s.aws/cluster" : "false"
-          },
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
           }
         }
       },
@@ -314,15 +247,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_two" {
           "elasticloadbalancing:RegisterTargets",
           "elasticloadbalancing:DeregisterTargets"
         ],
-        "Resource" : "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
-        "Condition" : {
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}"
-          },
-          "Null" : {
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
-          }
-        }
+        "Resource" : "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"
       },
       {
         "Effect" : "Allow",
@@ -333,15 +258,7 @@ resource "aws_iam_policy" "aws_loadbalancer_controller_policy_part_two" {
           "elasticloadbalancing:RemoveListenerCertificates",
           "elasticloadbalancing:ModifyRule"
         ],
-        "Resource" : "*",
-        "Condition" : {
-          "ArnEquals" : {
-            "ec2:Vpc" : "arn:aws:ec2:${var.region}:${var.aws_account_id}:vpc/${var.vpc_id}",
-          },
-          "Null" : {
-            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" : "false"
-          }
-        }
+        "Resource" : "*"
       }
     ]
   })
