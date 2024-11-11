@@ -26,3 +26,6 @@ cluster_version = "1.30"
 ebs_driver_version = "v1.34.0-eksbuild.1"
 # if any kms encryption used, provide the arn here
 kms_key_arn = ""
+
+/* variables for ACM certificates */
+root_domain = "ozonetel.com"

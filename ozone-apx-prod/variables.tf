@@ -106,3 +106,12 @@ variable "kms_key_arn" {
   type        = string
   default     = ""
 }
+
+/*-------------------------------
+  variables for ACM certificates
+---------------------------------*/
+
+variable "root_domain" {
+  description = "root domain of the environment"
+  type        = string
+}
