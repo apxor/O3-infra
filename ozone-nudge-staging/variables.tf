@@ -111,7 +111,7 @@ variable "kms_key_arn" {
   variables for ACM certificates
 ---------------------------------*/
 
-variable "root_domain" {
-  description = "root domain of the environment"
-  type        = string
-}
+# variable "root_domain" {
+#   description = "root domain of the environment"
+#   type        = string
+# }
