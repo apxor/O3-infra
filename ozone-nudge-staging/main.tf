@@ -19,7 +19,7 @@ locals {
 /* Import default-iam Module */
 
 module "default-iam" {
-  source      = "./tf-modules-generic/default-iam"
+  source      = "../tf-modules-generic/default-iam"
   environment = var.environment
   region      = var.region
 }
@@ -45,7 +45,7 @@ resource "aws_eks_cluster" "eks_cluster" {
 
 module "oidc" {
   depends_on   = [aws_eks_cluster.eks_cluster]
-  source       = "./tf-modules-generic/oidc"
+  source       = "../tf-modules-generic/oidc"
   cluster_name = var.cluster_name
 }
 
@@ -53,7 +53,7 @@ module "oidc" {
 
 module "ebs-driver-addon" {
   depends_on                   = [aws_eks_cluster.eks_cluster, module.oidc, module.ng-temp]
-  source                       = "./tf-modules-generic/ebs-csi-driver"
+  source                       = "../tf-modules-generic/ebs-csi-driver"
   region                       = var.region
   cluster_name                 = var.cluster_name
   oidc_id                      = module.oidc.oidc_id
@@ -68,7 +68,7 @@ module "ebs-driver-addon" {
 
 module "autoscaler" {
   depends_on                = [aws_eks_cluster.eks_cluster, module.oidc, module.ng-temp]
-  source                    = "./tf-modules-generic/cluster-autoscaler"
+  source                    = "../tf-modules-generic/cluster-autoscaler"
   region                    = var.region
   aws_account_id            = var.aws_account_id
   oidc_id                   = module.oidc.oidc_id
@@ -81,7 +81,7 @@ module "autoscaler" {
 
 module "alb-controller" {
   depends_on                = [module.oidc]
-  source                    = "./tf-modules-generic/alb-controller"
+  source                    = "../tf-modules-generic/alb-controller"
   region                    = var.region
   aws_account_id            = var.aws_account_id
   cluster_name              = var.cluster_name
