@@ -2,7 +2,7 @@
 
 module "nudg-apx-ozone-certificate" {
   source                    = "../tf-modules-generic/acm-certificate"
-  domain_name               = "server.apxor.${var.root_domain}"
+  domain_name               = "servern.apxor.${var.root_domain}"
   subject_alternative_names = ["*.apxor.${var.root_domain}"]
   root_domain               = var.root_domain
 }
