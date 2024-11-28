@@ -28,4 +28,4 @@ ebs_driver_version = "v1.34.0-eksbuild.1"
 kms_key_arn = "*"
 
 /* variables for ACM certificates */
-# root_domain = "ozonetel.com"
+root_domain = "ozonetel.com"
