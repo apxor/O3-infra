@@ -41,3 +41,26 @@ module "apx-o3-pg-backrest" {
   bucket_name                    = "apx-o3-${var.environment}-dashboard-downloads"
   create_user_access_credentials = true
 }
+
+module "apx-o3-images" {
+  source              = "../tf-modules/s3-bucket"
+  bucket_name         = "apxor-o3-${var.environment}-images"
+  block_public_access = false
+}
+
+module "apx-o3-loki" {
+  source                         = "../tf-modules/s3-bucket"
+  bucket_name                    = "apx-o3-loki"
+  create_user_access_credentials = true
+}
+
+module "apx-o3-postgres-backup" {
+  source                         = "../tf-modules/s3-bucket"
+  bucket_name                    = "apx-o3-postgres-backup"
+  create_user_access_credentials = true
+}
+
+module "apx-o3-campaign-resources" {
+  source      = "../tf-modules/s3-bucket"
+  bucket_name = "apx-campaign-resources"
+}
