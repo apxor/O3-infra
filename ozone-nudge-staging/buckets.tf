@@ -50,17 +50,18 @@ module "apx-o3-images" {
 
 module "apx-o3-loki" {
   source                         = "../tf-modules/s3-bucket"
-  bucket_name                    = "apx-o3-loki"
+  bucket_name                    = "apx-o3-${var.environment}-loki"
   create_user_access_credentials = true
 }
 
 module "apx-o3-postgres-backup" {
   source                         = "../tf-modules/s3-bucket"
-  bucket_name                    = "apx-o3-postgres-backup"
+  bucket_name                    = "apx-o3-${var.environment}-postgres-backup"
   create_user_access_credentials = true
 }
 
 module "apx-o3-campaign-resources" {
-  source      = "../tf-modules/s3-bucket"
-  bucket_name = "apx-campaign-resources"
+  source                         = "../tf-modules/s3-bucket"
+  bucket_name                    = "apx-${var.environment}-campaign-resources"
+  create_user_access_credentials = true
 }
