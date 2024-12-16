@@ -21,7 +21,30 @@ locals {
     }
   ]) : tolist([])
 
-  full_statement = concat(local.buckets_statement)
+  emr_statement = var.access_to_emr ? tolist([
+    {
+      "Effect" : "Allow",
+      "Action" : tolist([
+        "emr-containers:StartJobRun",
+        "emr-containers:ListJobRuns",
+        "emr-containers:DescribeJobRun",
+        "emr-containers:CancelJobRun"
+      ]),
+      "Resource" : tolist(["*"])
+    },
+    {
+      "Effect" : "Allow",
+      "Action" : tolist([
+        "emr-containers:CreateVirtualCluster",
+        "emr-containers:ListVirtualClusters",
+        "emr-containers:DescribeVirtualCluster",
+        "emr-containers:DeleteVirtualCluster"
+      ]),
+      "Resource" : tolist(["*"])
+    }
+  ]) : tolist([])
+
+  full_statement = concat(local.buckets_statement, local.emr_statement)
   need_iam       = length(local.full_statement) > 0 ? true : false
 }
 

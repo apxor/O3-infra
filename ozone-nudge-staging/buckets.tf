@@ -41,3 +41,9 @@ module "apx-o3-pg-backrest" {
   bucket_name                    = "apx-o3-${var.environment}-dashboard-downloads"
   create_user_access_credentials = true
 }
+
+module "apx-o3-spark" {
+  source                         = "../tf-modules-generic/s3-bucket"
+  bucket_name                    = "apx-o3-${var.environment}-spark"
+  create_user_access_credentials = true
+}

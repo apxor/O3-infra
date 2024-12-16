@@ -37,6 +37,11 @@ variable "access_to_s3_buckets" {
   default     = null
 }
 
+variable "access_to_emr" {
+  type    = bool
+  default = false
+}
+
 variable "environment" {
   type        = string
   description = "environment name"
