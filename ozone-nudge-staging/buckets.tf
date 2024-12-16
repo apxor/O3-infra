@@ -42,6 +42,12 @@ module "apx-o3-pg-backrest" {
   create_user_access_credentials = true
 }
 
+module "apx-o3-spark" {
+  source                         = "../tf-modules-generic/s3-bucket"
+  bucket_name                    = "apx-o3-${var.environment}-spark"
+  create_user_access_credentials = true
+}
+
 module "apx-o3-images" {
   source              = "../tf-modules/s3-bucket"
   bucket_name         = "apxor-o3-${var.environment}-images"
