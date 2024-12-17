@@ -32,7 +32,7 @@ module "apx-o3-cohorts" {
 
 module "apx-o3-dashboard-downloads" {
   source                         = "../tf-modules-generic/s3-bucket"
-  bucket_name                    = "apx-o3-${var.environment}-dashboard-downloads"
+  bucket_name                    = "apx-o3-${var.environment}-dashboard-download"
   create_user_access_credentials = true
 }
 
