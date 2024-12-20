@@ -87,7 +87,7 @@ module "postgres_sa" {
 
 module "message_publisher_sa" {
   source                    = "../tf-modules-generic/iam-sa"
-  service_account_name      = "message-publisher"
+  service_account_name      = "mp"
   namespace                 = "message-publisher"
   region                    = var.region
   oidc_id                   = module.oidc.oidc_id
