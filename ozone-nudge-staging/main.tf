@@ -39,6 +39,16 @@ resource "aws_eks_cluster" "eks_cluster" {
     subnet_ids         = concat(var.private_subnets_ids_zone_a, var.private_subnets_ids_zone_b, var.private_subnets_ids_zone_c)
     security_group_ids = var.security_groups_ids
   }
+  /*
+                            ********* EMR Service *********
+    enable this if EMR service is needed, not terraforming this update causing cluster roll-out
+    for existing cluster use this: 
+      $ aws eks update-cluster-config --name ${cluster_name} --access-config authenticationMode=API_AND_CONFIG_MAP
+    
+    access_config {
+      authentication_mode = "API_AND_CONFIG_MAP"
+    }
+  */
 }
 
 /* Import oidc Module */
@@ -90,4 +100,20 @@ module "alb-controller" {
   vpc_id                    = var.vpc_id
   enabled                   = true
   environment               = var.environment
+}
+
+
+/* EMR on EKS */
+# FIXME: move these variables to a variables file 
+
+module "emr_eks" {
+  source           = "../tf-modules-generic/emr-eks"
+  depends_on       = [aws_eks_cluster.eks_cluster]
+  aws_region       = var.region
+  sso_profile      = var.sso_profile
+  eks_cluster_name = var.cluster_name
+  eks_namespaces   = ["message-publisher"]
+  oidc_id          = module.oidc.oidc_id
+  emr_bucket       = "apx-o3-spark-bucket"
+  emr_cluster_name = aws_eks_cluster.eks_cluster.name
 }
