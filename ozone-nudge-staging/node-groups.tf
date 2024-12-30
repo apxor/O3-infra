@@ -45,6 +45,8 @@ locals {
   standby_general_8C_32G   = "m6a.2xlarge"
   standby_general_16C_64G  = "m6a.4xlarge"
   standby_general_32C_128G = "m6a.8xlarge"
+
+  standby_general_4C_16G_M5A = "m5a.xlarge"
 }
 
 locals {
@@ -82,5 +84,21 @@ module "ng-temp" {
     min_size     = 1
     desired_size = 1
     max_size     = 10
+  }
+}
+
+module "spark_spot" {
+  depends_on         = [aws_eks_cluster.eks_cluster]
+  name               = "ng-spark-spot"
+  instance_types     = [local.standby_general_4C_16G_M5A]
+  provision_type     = local.SPOT
+  autoscaler_enabled = true
+  subnet_ids         = local.subnet_1a
+  common_config      = local.common_conf
+  source             = "../tf-modules-generic/node-group"
+  scaling_config = {
+    min_size     = 1
+    desired_size = 1
+    max_size     = 5
   }
 }
