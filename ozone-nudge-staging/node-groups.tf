@@ -90,7 +90,7 @@ module "ng-temp" {
 module "spark_spot" {
   depends_on         = [aws_eks_cluster.eks_cluster]
   name               = "ng-spark-spot"
-  instance_types     = [local.standby_general_4C_16G_M5A, local.standby_general_4C_16G, local.spot_general_2C_8G]
+  instance_types     = [local.standby_general_4C_16G_M5A, local.standby_general_4C_16G, local.standby_general_8C_32G, local.standby_highmem_4C_32G]
   provision_type     = local.SPOT
   autoscaler_enabled = true
   subnet_ids         = local.subnet_1b
