@@ -83,7 +83,7 @@ module "ng-temp" {
   scaling_config = {
     min_size     = 1
     desired_size = 1
-    max_size     = 10
+    max_size     = 6
   }
 }
 
