@@ -84,3 +84,17 @@ data "aws_iam_policy_document" "allow_public_access_for_bucket" {
     ]
   }
 }
+
+resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
+  count  = var.expiry != 0 ? 1 : 0
+  bucket = aws_s3_bucket.bucket.id
+
+  rule {
+    id     = "expire"
+    status = "Enabled"
+
+    expiration {
+      days = var.expiry
+    }
+  }
+}

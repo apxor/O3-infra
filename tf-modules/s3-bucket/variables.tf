@@ -23,3 +23,10 @@ variable "enable_bucket_versioning" {
   type    = bool
   default = false
 }
+
+variable "expiry" {
+  type    = number
+  default = 0
+  description = "expiry in days for the objects in the bucket"
+}
+
