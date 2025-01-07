@@ -21,4 +21,5 @@ module "apx-o3-ch-archives" {
 module "apx-o3-dashboard-downloadables" {
   source      = "../tf-modules/s3-bucket"
   bucket_name = "apx-o3-stg-dashboard-downloadables"
+  expiry      = 7
 }
